@@ -13,8 +13,8 @@ public class Matrix {
 		int[][] a1 = makeMatrix("a1.txt");
 		int[][] b1 = makeMatrix("a1.txt");
 
-		printMatrix(a1);
-		printMatrix(b1); 
+	//	printMatrix(a1);
+	//	printMatrix(b1); 
 
 		//Now we're going to scatter the tasks to different processes
 
