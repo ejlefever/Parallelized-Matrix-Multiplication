@@ -1,7 +1,6 @@
 import mpi.* ;
 import java.util.*;
 import java.io.*;
-import java.nio.file.*;
 import java.lang.Character;
 
   
@@ -11,12 +10,8 @@ public class Matrix {
 		
 		MPI.Init(args);
 		
-
-		Path path = FileSystems.getDefault().getPath("a1.txt");
-		Path path2 = FileSystems.getDefault().getPath("a1.txt");
-
-		int[][] a1 = makeMatrix(path);
-		int[][] b1 = makeMatrix(path2);
+		int[][] a1 = makeMatrix("a1.txt");
+		int[][] b1 = makeMatrix("a1.txt");
 
 		printMatrix(a1);
 		printMatrix(b1); 
@@ -83,7 +78,7 @@ public class Matrix {
 
     }
 
-    public static int[][] makeMatrix(Path path) throws IOException {
+    public static int[][] makeMatrix(String file_name) throws IOException{
 
     	int x = 0;
 		int j = 0;
@@ -94,19 +89,25 @@ public class Matrix {
 		StringBuffer matrix = new StringBuffer();
 
 
-		BufferedReader br =	Files.newBufferedReader(path);
-		while ((thisLine = br.readLine()) != null) {
-			counterx++;
-			for (int i = 0; i < thisLine.length(); i++) {
-				if (isNumber(thisLine.charAt(i))) {
-					is93++;
-					if (is93>93) {
-						countery++;
-						matrix.append(thisLine.charAt(i));
+		String thisline;
+		BufferedReader br = new BufferedReader(new FileReader(new File(file_name)));
+		while (br.ready()) {
+		        thisline = br.readLine();
+		        // do something with the line
+		        while ((thisLine = br.readLine()) != null) {
+					counterx++;
+					for (int i = 0; i < thisLine.length(); i++) {
+						if (isNumber(thisLine.charAt(i))) {
+						is93++;
+						if (is93>93) {
+							countery++;
+							matrix.append(thisLine.charAt(i));
+						}
 					}
 				}
 			}
 		}
+		br.close();
 
 		counterx = counterx - 2;
 		countery = countery/counterx;
@@ -124,6 +125,8 @@ public class Matrix {
 		return root;
 
 	}
+	
+
 	
 }
 
